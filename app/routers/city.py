@@ -1,4 +1,4 @@
-from http.client import HTTPException
+from fastapi.exceptions import HTTPException
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -18,7 +18,7 @@ def create_city(city: CityCreate, db: Session = Depends(get_db)):
     return create_city(db=db, city=city)
 
 
-@router.get("/cities/", response_model=City)
+@router.get("/cities/", response_model=list[City])
 def get_cities(db: Session = Depends(get_db)):
     return get_cities(db=db)
 

@@ -3,11 +3,18 @@ from app.models.temperature import Temperature
 from app.models.city import City
 import requests
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+api_key = os.getenv("OPENWEATHER_API_KEY")
+
 
 def fetch_and_store_temperatures(db: Session):
     cities = db.query(City).all()
     for city in cities:
-        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city.name}&appid=YOUR_API_KEY")
+        response = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={city.name}&appid={api_key}")
         data = response.json()
         temperature = data["main"]["temp"]
 
